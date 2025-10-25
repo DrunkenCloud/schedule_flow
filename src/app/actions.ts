@@ -1,6 +1,6 @@
 'use server';
 
-import { parseIcsFile } from '@/lib/events';
+import { parseIcsFile } from '@/lib/ical-helpers';
 import { type CalendarEvent } from '@/lib/types';
 
 export async function parseIcsString(
