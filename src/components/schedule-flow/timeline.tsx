@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { type EventRow } from "@/lib/types";
+import { type CalendarEvent, type EventRow } from "@/lib/types";
 import { EventCard } from "./event-card";
 import { format, addHours, differenceInHours } from "date-fns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -12,6 +12,8 @@ interface TimelineProps {
   viewStart: Date;
   viewEnd: Date;
   zoomLevel: number;
+  selectedEvents: Set<string>;
+  onEventSelect: (eventId: string) => void;
   className?: string;
 }
 
@@ -21,7 +23,7 @@ const MIN_ROW_HEIGHT = BASE_EVENT_HEIGHT + PADDING_Y * 2;
 const ROW_GAP = 8;
 const BASE_HOUR_WIDTH = 100;
 
-export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }: TimelineProps) {
+export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, selectedEvents, onEventSelect, className }: TimelineProps) {
   const [rowDimensions, setRowDimensions] = React.useState<{ height: number; top: number }[]>([]);
   
   const timelineRef = React.useRef<HTMLDivElement>(null);
@@ -102,6 +104,7 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }
               row.map((event) => {
                 const dims = rowDimensions[rowIndex];
                 if (!dims) return null;
+                const isSelected = selectedEvents.has(event.id);
                 return (
                   <EventCard
                     key={`${event.id}-${rowIndex}`}
@@ -110,6 +113,8 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }
                     viewEnd={viewEnd}
                     top={dims.top}
                     height={dims.height}
+                    isSelected={isSelected}
+                    onSelect={onEventSelect}
                   />
                 );
               })

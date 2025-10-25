@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { format, differenceInMilliseconds } from "date-fns";
-import { CalendarIcon, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface EventCardProps {
@@ -17,9 +17,11 @@ interface EventCardProps {
   viewEnd: Date;
   top: number;
   height: number;
+  isSelected: boolean;
+  onSelect: (eventId: string) => void;
 }
 
-export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardProps) {
+export function EventCard({ event, viewStart, viewEnd, top, height, isSelected, onSelect }: EventCardProps) {
   const totalViewDuration = differenceInMilliseconds(viewEnd, viewStart);
 
   const leftOffset = Math.max(event.start.getTime(), viewStart.getTime());
@@ -32,16 +34,22 @@ export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardP
   const colorIndex = (event.summary?.charCodeAt(0) || 0) % 5 + 1;
   const colorClass = `bg-chart-${colorIndex}`;
   const textClass = 'text-primary-foreground';
+  
+  const handleSelect = () => {
+    onSelect(event.id);
+  }
 
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger asChild>
           <div
+            onClick={handleSelect}
             className={cn(
               "absolute rounded-lg p-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex flex-col justify-start overflow-hidden",
-              colorClass,
-              textClass
+              isSelected
+                ? "bg-muted text-muted-foreground"
+                : [colorClass, textClass]
             )}
             style={{
               top: `${top}px`,

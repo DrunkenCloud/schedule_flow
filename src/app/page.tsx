@@ -28,6 +28,7 @@ export default function Home() {
   const [activePeriod, setActivePeriod] = useState<ViewPeriod>('all');
   const [eventDate, setEventDate] = useState<Date>(new Date());
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   const handleFileSelect = (file: File) => {
@@ -55,6 +56,7 @@ export default function Home() {
         }
 
         setAllEvents(parsedEvents);
+        setSelectedEvents(new Set());
         const firstEventDate = getDayFromEvents(parsedEvents);
         setEventDate(firstEventDate);
         toast({
@@ -79,6 +81,18 @@ export default function Home() {
         });
     }
     reader.readAsText(file);
+  };
+  
+  const handleEventSelect = (eventId: string) => {
+    setSelectedEvents(prevSelected => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(eventId)) {
+        newSelected.delete(eventId);
+      } else {
+        newSelected.add(eventId);
+      }
+      return newSelected;
+    });
   };
 
   const { viewStart, viewEnd } = useMemo(() => {
@@ -146,7 +160,14 @@ export default function Home() {
               />
               <ZoomIn className="text-muted-foreground" />
             </div>
-            <Timeline eventRows={eventRows} viewStart={viewStart} viewEnd={viewEnd} zoomLevel={zoomLevel} />
+            <Timeline 
+              eventRows={eventRows} 
+              viewStart={viewStart} 
+              viewEnd={viewEnd} 
+              zoomLevel={zoomLevel} 
+              selectedEvents={selectedEvents}
+              onEventSelect={handleEventSelect}
+            />
           </CardContent>
         </Card>
       ) : (
