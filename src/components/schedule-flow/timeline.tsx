@@ -52,7 +52,7 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, heightZoomL
   
 
   const timelineHeight = rowDimensions.length > 0 
-    ? rowDimensions[rowDimensions.length - 1].top + rowDimensions[rowDimensions.length - 1].height + (ROW_GAP * heightZoomLevel)
+    ? rowDimensions[rowDimensions.length - 1].top + rowDimensions[rowDimensions.length - 1].height
     : 0;
 
   const hoursInView = Math.ceil(differenceInHours(viewEnd, viewStart));
