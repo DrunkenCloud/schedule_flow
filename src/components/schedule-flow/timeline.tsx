@@ -34,20 +34,20 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }
       const row = eventRows[i];
       if (!row || row.length === 0) continue;
       
-      const heights = row.map(e => {
-          // Estimate height based on summary length. This is an approximation.
-          const charsPerLine = 30 / zoomLevel;
-          const numLines = Math.ceil((e.summary?.length || 1) / charsPerLine);
-          return numLines * BASE_EVENT_HEIGHT + PADDING_Y * 2;
-      });
-      
-      const maxRowHeight = Math.max(MIN_ROW_HEIGHT, ...heights);
+      const maxLinesInRow = Math.max(...row.map(e => {
+        // A simple heuristic for lines. Assume a line break every 25 chars at normal zoom.
+        // This is not perfect but avoids complex DOM measurements.
+        const charsPerLine = 30 / zoomLevel;
+        return Math.min(3, Math.ceil((e.summary?.length || 1) / charsPerLine));
+      }));
+
+      const rowHeight = Math.max(MIN_ROW_HEIGHT, maxLinesInRow * BASE_EVENT_HEIGHT + PADDING_Y);
 
       newRowDimensions.push({
-        height: maxRowHeight,
+        height: rowHeight,
         top: cumulativeTop,
       });
-      cumulativeTop += maxRowHeight + ROW_GAP;
+      cumulativeTop += rowHeight + ROW_GAP;
     }
     
     setRowDimensions(newRowDimensions);

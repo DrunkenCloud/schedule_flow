@@ -39,7 +39,7 @@ export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardP
         <TooltipTrigger asChild>
           <div
             className={cn(
-              "absolute rounded-lg px-3 py-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex items-start gap-2 overflow-hidden",
+              "absolute rounded-lg p-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex flex-col justify-center overflow-hidden",
               colorClass,
               textClass
             )}
@@ -51,8 +51,7 @@ export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardP
               minWidth: '20px'
             }}
           >
-            <CalendarIcon className="h-4 w-4 shrink-0 mt-0.5" />
-            <span className="font-semibold">{event.summary}</span>
+            <p className="font-semibold whitespace-normal break-words">{event.summary}</p>
           </div>
         </TooltipTrigger>
         <TooltipContent className="max-w-xs z-50 bg-popover text-popover-foreground rounded-lg shadow-lg p-4">
