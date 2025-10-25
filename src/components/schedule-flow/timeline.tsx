@@ -1,8 +1,9 @@
 "use client";
 
+import React from 'react';
 import { type EventRow } from "@/lib/types";
 import { EventCard } from "./event-card";
-import { format, addHours, startOfDay, differenceInHours } from "date-fns";
+import { format, addHours, differenceInHours } from "date-fns";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
@@ -14,12 +15,49 @@ interface TimelineProps {
   className?: string;
 }
 
-const EVENT_HEIGHT = 48;
+const BASE_EVENT_HEIGHT = 28; // h-7
+const PADDING_Y = 8; // py-2
+const MIN_ROW_HEIGHT = BASE_EVENT_HEIGHT + PADDING_Y * 2;
 const ROW_GAP = 8;
-const BASE_HOUR_WIDTH = 100; // Corresponds to min-w-[100px]
+const BASE_HOUR_WIDTH = 100;
 
 export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }: TimelineProps) {
-  const timelineHeight = eventRows.length * (EVENT_HEIGHT + ROW_GAP) + ROW_GAP;
+  const [rowDimensions, setRowDimensions] = React.useState<{ height: number; top: number }[]>([]);
+  
+  const timelineRef = React.useRef<HTMLDivElement>(null);
+
+  React.useLayoutEffect(() => {
+    const newRowDimensions: { height: number; top: number }[] = [];
+    let cumulativeTop = ROW_GAP;
+
+    for (let i = 0; i < eventRows.length; i++) {
+      const row = eventRows[i];
+      if (!row || row.length === 0) continue;
+      
+      const heights = row.map(e => {
+          // Estimate height based on summary length. This is an approximation.
+          const charsPerLine = 30 / zoomLevel;
+          const numLines = Math.ceil((e.summary?.length || 1) / charsPerLine);
+          return numLines * BASE_EVENT_HEIGHT + PADDING_Y * 2;
+      });
+      
+      const maxRowHeight = Math.max(MIN_ROW_HEIGHT, ...heights);
+
+      newRowDimensions.push({
+        height: maxRowHeight,
+        top: cumulativeTop,
+      });
+      cumulativeTop += maxRowHeight + ROW_GAP;
+    }
+    
+    setRowDimensions(newRowDimensions);
+  }, [eventRows, zoomLevel]);
+  
+
+  const timelineHeight = rowDimensions.length > 0 
+    ? rowDimensions[rowDimensions.length - 1].top + rowDimensions[rowDimensions.length - 1].height + ROW_GAP
+    : 0;
+
   const hoursInView = Math.ceil(differenceInHours(viewEnd, viewStart));
   const hours = Array.from({ length: hoursInView }, (_, i) => addHours(viewStart, i));
 
@@ -29,7 +67,7 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }
   return (
     <div className={cn("w-full", className)}>
       <ScrollArea className="w-full whitespace-nowrap rounded-md border">
-        <div className="relative p-4" style={{ minWidth: `${totalWidth}px` }}>
+        <div ref={timelineRef} className="relative p-4" style={{ minWidth: `${totalWidth}px` }}>
           {/* Hour Markers */}
           <div
             className="relative grid h-12 border-b"
@@ -61,15 +99,20 @@ export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, className }
             </div>
 
             {eventRows.map((row, rowIndex) =>
-              row.map((event) => (
-                <EventCard
-                  key={`${event.id}-${rowIndex}`}
-                  event={event}
-                  viewStart={viewStart}
-                  viewEnd={viewEnd}
-                  row={rowIndex}
-                />
-              ))
+              row.map((event) => {
+                const dims = rowDimensions[rowIndex];
+                if (!dims) return null;
+                return (
+                  <EventCard
+                    key={`${event.id}-${rowIndex}`}
+                    event={event}
+                    viewStart={viewStart}
+                    viewEnd={viewEnd}
+                    top={dims.top}
+                    height={dims.height}
+                  />
+                );
+              })
             )}
           </div>
         </div>

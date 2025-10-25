@@ -6,6 +6,8 @@ export const processEventsForLayout = (
   viewStart: Date,
   viewEnd: Date
 ): EventRow[] => {
+  if (!events) return [];
+
   const filteredEvents = events.filter(
     (event) =>
       event.start < viewEnd && event.end > viewStart

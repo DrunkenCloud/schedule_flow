@@ -15,13 +15,11 @@ interface EventCardProps {
   event: CalendarEvent;
   viewStart: Date;
   viewEnd: Date;
-  row: number;
+  top: number;
+  height: number;
 }
 
-const EVENT_HEIGHT = 48; // h-12
-const ROW_GAP = 8; // gap-2
-
-export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
+export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardProps) {
   const totalViewDuration = differenceInMilliseconds(viewEnd, viewStart);
 
   const leftOffset = Math.max(event.start.getTime(), viewStart.getTime());
@@ -29,8 +27,6 @@ export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
   
   const width = ((rightOffset - leftOffset) / totalViewDuration) * 100;
   const left = ((leftOffset - viewStart.getTime()) / totalViewDuration) * 100;
-
-  const top = row * (EVENT_HEIGHT + ROW_GAP);
 
   // Simple hashing for color variety from theme's chart colors
   const colorIndex = (event.summary?.charCodeAt(0) || 0) % 5 + 1;
@@ -43,7 +39,7 @@ export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
         <TooltipTrigger asChild>
           <div
             className={cn(
-              "absolute rounded-lg px-3 py-1 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex items-center gap-2 overflow-hidden",
+              "absolute rounded-lg px-3 py-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex items-start gap-2 overflow-hidden",
               colorClass,
               textClass
             )}
@@ -51,12 +47,12 @@ export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
               top: `${top}px`,
               left: `${left}%`,
               width: `${width}%`,
-              height: `${EVENT_HEIGHT}px`,
+              height: `${height}px`,
               minWidth: '20px'
             }}
           >
-            <CalendarIcon className="h-4 w-4 shrink-0" />
-            <span className="font-semibold whitespace-nowrap">{event.summary}</span>
+            <CalendarIcon className="h-4 w-4 shrink-0 mt-0.5" />
+            <span className="font-semibold">{event.summary}</span>
           </div>
         </TooltipTrigger>
         <TooltipContent className="max-w-xs z-50 bg-popover text-popover-foreground rounded-lg shadow-lg p-4">
