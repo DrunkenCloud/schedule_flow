@@ -30,6 +30,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.alias['ical.js'] = false;
+      config.resolve.alias['ical'] = false;
+    }
+
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    }
+    
+    return config;
+  },
 };
 
 export default nextConfig;
