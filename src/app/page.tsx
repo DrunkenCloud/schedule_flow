@@ -171,7 +171,7 @@ export default function Home() {
                       <Slider
                         min={1}
                         max={20}
-                        step={0.2}
+                        step={0.1}
                         value={[zoomLevel]}
                         onValueChange={(value) => setZoomLevel(value[0])}
                         className="max-w-xs"
@@ -186,7 +186,7 @@ export default function Home() {
                       <Slider
                         min={1}
                         max={20}
-                        step={0.2}
+                        step={0.1}
                         value={[heightZoomLevel]}
                         onValueChange={(value) => setHeightZoomLevel(value[0])}
                         className="max-w-xs"
