@@ -39,7 +39,7 @@ export function EventCard({ event, viewStart, viewEnd, top, height }: EventCardP
         <TooltipTrigger asChild>
           <div
             className={cn(
-              "absolute rounded-lg p-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex flex-col justify-center overflow-hidden",
+              "absolute rounded-lg p-2 text-sm shadow-md transition-all duration-200 ease-in-out hover:shadow-xl hover:scale-[1.02] cursor-pointer flex flex-col justify-start overflow-hidden",
               colorClass,
               textClass
             )}

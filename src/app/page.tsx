@@ -138,7 +138,7 @@ export default function Home() {
               <ZoomOut className="text-muted-foreground" />
               <Slider
                 min={1}
-                max={4}
+                max={8}
                 step={0.1}
                 value={[zoomLevel]}
                 onValueChange={(value) => setZoomLevel(value[0])}
