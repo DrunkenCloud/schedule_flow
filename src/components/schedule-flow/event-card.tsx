@@ -33,7 +33,7 @@ export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
   const top = row * (EVENT_HEIGHT + ROW_GAP);
 
   // Simple hashing for color variety from theme's chart colors
-  const colorIndex = (event.summary.charCodeAt(0) || 0) % 5 + 1;
+  const colorIndex = (event.summary?.charCodeAt(0) || 0) % 5 + 1;
   const colorClass = `bg-chart-${colorIndex}`;
   const textClass = 'text-primary-foreground';
 
@@ -56,7 +56,7 @@ export function EventCard({ event, viewStart, viewEnd, row }: EventCardProps) {
             }}
           >
             <CalendarIcon className="h-4 w-4 shrink-0" />
-            <span className="truncate font-semibold">{event.summary}</span>
+            <span className="font-semibold whitespace-nowrap">{event.summary}</span>
           </div>
         </TooltipTrigger>
         <TooltipContent className="max-w-xs z-50 bg-popover text-popover-foreground rounded-lg shadow-lg p-4">

@@ -9,8 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { startOfDay, endOfDay, setHours, format } from 'date-fns';
-import { CalendarDays, GanttChartSquare } from 'lucide-react';
+import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut } from 'lucide-react';
 import { parseIcsString } from './actions';
+import { Slider } from '@/components/ui/slider';
 
 type ViewPeriod = 'all' | 'morning' | 'afternoon' | 'evening';
 
@@ -26,6 +27,7 @@ export default function Home() {
   const [eventRows, setEventRows] = useState<EventRow[]>([]);
   const [activePeriod, setActivePeriod] = useState<ViewPeriod>('all');
   const [eventDate, setEventDate] = useState<Date>(new Date());
+  const [zoomLevel, setZoomLevel] = useState(1);
   const { toast } = useToast();
 
   const handleFileSelect = (file: File) => {
@@ -36,8 +38,7 @@ export default function Home() {
         if (!content) throw new Error("File is empty.");
         
         const parsedEventsResult = await parseIcsString(content);
-
-        // Dates are strings after serialization, so we need to convert them back to Date objects
+        
         const parsedEvents: CalendarEvent[] = parsedEventsResult.map(event => ({
           ...event,
           start: new Date(event.start),
@@ -133,7 +134,19 @@ export default function Home() {
             </div>
           </CardHeader>
           <CardContent>
-            <Timeline eventRows={eventRows} viewStart={viewStart} viewEnd={viewEnd} />
+             <div className="flex items-center gap-4 mb-4">
+              <ZoomOut className="text-muted-foreground" />
+              <Slider
+                min={1}
+                max={4}
+                step={0.1}
+                value={[zoomLevel]}
+                onValueChange={(value) => setZoomLevel(value[0])}
+                className="max-w-xs"
+              />
+              <ZoomIn className="text-muted-foreground" />
+            </div>
+            <Timeline eventRows={eventRows} viewStart={viewStart} viewEnd={viewEnd} zoomLevel={zoomLevel} />
           </CardContent>
         </Card>
       ) : (

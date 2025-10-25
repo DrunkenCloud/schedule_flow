@@ -1,6 +1,18 @@
 import { type CalendarEvent } from '@/lib/types';
 import ical from 'ical';
 
+// Helper to get value from ical property which can be string or object
+const getIcalValue = (prop: any): string => {
+    if (typeof prop === 'string') {
+        return prop;
+    }
+    if (prop && typeof prop === 'object' && prop.val) {
+        return prop.val;
+    }
+    return '';
+};
+
+
 export const parseIcsFile = (icsContent: string): CalendarEvent[] => {
   const data = ical.parseICS(icsContent);
   const events: CalendarEvent[] = [];
@@ -12,14 +24,14 @@ export const parseIcsFile = (icsContent: string): CalendarEvent[] => {
         if (!event.start) continue;
 
         const endDate = event.end || event.start;
-
+        
         events.push({
-          id: event.uid || key,
+          id: getIcalValue(event.uid) || key,
           start: new Date(event.start),
           end: new Date(endDate),
-          summary: event.summary?.val || 'No Title',
-          description: event.description?.val || '',
-          location: event.location?.val || '',
+          summary: getIcalValue(event.summary) || 'No Title',
+          description: getIcalValue(event.description) || '',
+          location: getIcalValue(event.location) || '',
         });
       }
     }
