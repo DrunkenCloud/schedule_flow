@@ -1,6 +1,6 @@
 import { type CalendarEvent, type EventRow } from '@/lib/types';
-import * as ical from 'ical';
-import { startOfDay, endOfDay } from 'date-fns';
+import ical from 'ical';
+import { startOfDay } from 'date-fns';
 
 export const parseIcsFile = (icsContent: string): CalendarEvent[] => {
   const data = ical.parseICS(icsContent);
