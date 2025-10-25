@@ -63,7 +63,7 @@ export function EventCard({ event, viewStart, viewEnd, top, height, isSelected, 
           </div>
         </TooltipTrigger>
         <TooltipContent className="max-w-xs z-50 bg-popover text-popover-foreground rounded-lg shadow-lg p-4">
-          <p className="font-bold text-lg mb-2">{event.summary}</p>
+          <p className="font-bold text-lg mb-2 break-words whitespace-normal">{event.summary}</p>
           <p className="text-sm text-muted-foreground">
             {format(event.start, "EEE, MMM d, h:mm a")} -{" "}
             {format(event.end, "h:mm a")}
