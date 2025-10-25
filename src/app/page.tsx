@@ -1,31 +1,20 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { processEventsForLayout, getDayFromEvents } from '@/lib/events';
+import { processEventsForLayout, getDayFromEvents, getEventTimeRange } from '@/lib/events';
 import { type CalendarEvent, type EventRow } from '@/lib/types';
 import { FileUploader } from '@/components/schedule-flow/file-uploader';
 import { Timeline } from '@/components/schedule-flow/timeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { startOfDay, endOfDay, setHours, format } from 'date-fns';
+import { format } from 'date-fns';
 import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut } from 'lucide-react';
 import { parseIcsString } from './actions';
 import { Slider } from '@/components/ui/slider';
 
-type ViewPeriod = 'all' | 'morning' | 'afternoon' | 'evening';
-
-const PERIODS: { id: ViewPeriod; label: string; startHour: number; endHour: number }[] = [
-  { id: 'all', label: 'All Day', startHour: 0, endHour: 24 },
-  { id: 'morning', label: 'Morning (6-12)', startHour: 6, endHour: 12 },
-  { id: 'afternoon', label: 'Afternoon (12-18)', startHour: 12, endHour: 18 },
-  { id: 'evening', label: 'Evening (18-24)', startHour: 18, endHour: 24 },
-];
-
 export default function Home() {
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);
   const [eventRows, setEventRows] = useState<EventRow[]>([]);
-  const [activePeriod, setActivePeriod] = useState<ViewPeriod>('all');
   const [eventDate, setEventDate] = useState<Date>(new Date());
   const [zoomLevel, setZoomLevel] = useState(1);
   const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
@@ -96,11 +85,8 @@ export default function Home() {
   };
 
   const { viewStart, viewEnd } = useMemo(() => {
-    const period = PERIODS.find(p => p.id === activePeriod) || PERIODS[0];
-    const start = setHours(startOfDay(eventDate), period.startHour);
-    const end = period.endHour === 24 ? endOfDay(eventDate) : setHours(startOfDay(eventDate), period.endHour);
-    return { viewStart: start, viewEnd: end };
-  }, [activePeriod, eventDate]);
+    return getEventTimeRange(allEvents, eventDate);
+  }, [allEvents, eventDate]);
 
   React.useEffect(() => {
     if (allEvents.length > 0) {
@@ -127,24 +113,13 @@ export default function Home() {
       
       {hasEvents ? (
          <Card>
-          <CardHeader className="flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <CardHeader>
             <div className="space-y-1">
               <CardTitle className="flex items-center gap-2">
                 <CalendarDays />
                 Your Schedule
               </CardTitle>
               <p className="text-muted-foreground">Displaying events for: {format(eventDate, "EEEE, MMMM d, yyyy")}</p>
-            </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              {PERIODS.map(period => (
-                <Button 
-                  key={period.id} 
-                  variant={activePeriod === period.id ? 'default' : 'outline'}
-                  onClick={() => setActivePeriod(period.id)}
-                >
-                  {period.label}
-                </Button>
-              ))}
             </div>
           </CardHeader>
           <CardContent>

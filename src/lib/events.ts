@@ -1,5 +1,5 @@
 import { type CalendarEvent, type EventRow } from '@/lib/types';
-import { startOfDay } from 'date-fns';
+import { startOfDay, endOfDay, startOfHour, endOfHour, addHours, subHours } from 'date-fns';
 
 export const processEventsForLayout = (
   events: CalendarEvent[],
@@ -52,4 +52,37 @@ export const getDayFromEvents = (events: CalendarEvent[]): Date => {
   // Sort events by start time to find the earliest one
   const sortedEvents = [...events].sort((a, b) => a.start.getTime() - b.start.getTime());
   return startOfDay(sortedEvents[0].start);
+};
+
+export const getEventTimeRange = (
+  allEvents: CalendarEvent[],
+  eventDate: Date
+): { viewStart: Date; viewEnd: Date } => {
+  if (allEvents.length === 0) {
+    return { viewStart: startOfDay(eventDate), viewEnd: endOfDay(eventDate) };
+  }
+
+  const eventsOnDate = allEvents.filter(
+    (event) =>
+      startOfDay(event.start).getTime() === startOfDay(eventDate).getTime()
+  );
+
+  if (eventsOnDate.length === 0) {
+    return {
+      viewStart: startOfDay(eventDate),
+      viewEnd: endOfDay(eventDate),
+    };
+  }
+
+  const firstEvent = eventsOnDate.reduce((earliest, current) =>
+    current.start < earliest.start ? current : earliest
+  );
+  const lastEvent = eventsOnDate.reduce((latest, current) =>
+    current.end > latest.end ? current : latest
+  );
+  
+  const viewStart = subHours(startOfHour(firstEvent.start), 1);
+  const viewEnd = addHours(endOfHour(lastEvent.end), 1);
+
+  return { viewStart, viewEnd };
 };
