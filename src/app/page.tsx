@@ -8,7 +8,7 @@ import { Timeline } from '@/components/schedule-flow/timeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut, StretchVertical, StretchHorizontal } from 'lucide-react';
+import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut, StretchVertical, StretchHorizontal, Github } from 'lucide-react';
 import { parseIcsString } from './actions';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
@@ -102,75 +102,87 @@ export default function Home() {
   const hasEvents = allEvents.length > 0;
 
   return (
-    <main className="container mx-auto p-4 md:p-8 space-y-8">
-      <header className="text-center space-y-2">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline flex items-center justify-center gap-3">
-          <GanttChartSquare className="w-10 h-10 text-primary" />
-          ScheduleFlow
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Visualize your calendar events from an .ics file on a clean, interactive timeline.
-        </p>
-      </header>
-      
-      {hasEvents ? (
-         <Card>
-          <CardHeader>
-            <div className="space-y-1">
-              <CardTitle className="flex items-center gap-2">
-                <CalendarDays />
-                Your Schedule
-              </CardTitle>
-              <p className="text-muted-foreground">Displaying events for: {format(eventDate, "EEEE, MMMM d, yyyy")}</p>
-            </div>
-          </CardHeader>
-          <CardContent>
-             <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2 text-muted-foreground"><StretchHorizontal/> Horizontal Zoom</Label>
-                  <div className="flex items-center gap-4">
-                    <ZoomOut className="text-muted-foreground" />
-                    <Slider
-                      min={1}
-                      max={8}
-                      step={0.1}
-                      value={[zoomLevel]}
-                      onValueChange={(value) => setZoomLevel(value[0])}
-                      className="max-w-xs"
-                    />
-                    <ZoomIn className="text-muted-foreground" />
+    <>
+      <main className="container mx-auto p-4 md:p-8 space-y-8">
+        <header className="text-center space-y-2">
+          <h1 className="text-4xl md:text-5xl font-bold font-headline flex items-center justify-center gap-3">
+            <GanttChartSquare className="w-10 h-10 text-primary" />
+            ScheduleFlow
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Visualize your calendar events from an .ics file on a clean, interactive timeline.
+          </p>
+        </header>
+        
+        {hasEvents ? (
+          <Card>
+            <CardHeader>
+              <div className="space-y-1">
+                <CardTitle className="flex items-center gap-2">
+                  <CalendarDays />
+                  Your Schedule
+                </CardTitle>
+                <p className="text-muted-foreground">Displaying events for: {format(eventDate, "EEEE, MMMM d, yyyy")}</p>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2 text-muted-foreground"><StretchHorizontal/> Horizontal Zoom</Label>
+                    <div className="flex items-center gap-4">
+                      <ZoomOut className="text-muted-foreground" />
+                      <Slider
+                        min={1}
+                        max={12}
+                        step={0.1}
+                        value={[zoomLevel]}
+                        onValueChange={(value) => setZoomLevel(value[0])}
+                        className="max-w-xs"
+                      />
+                      <ZoomIn className="text-muted-foreground" />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2 text-muted-foreground"><StretchVertical /> Vertical Zoom</Label>
-                   <div className="flex items-center gap-4">
-                    <ZoomOut className="text-muted-foreground" />
-                    <Slider
-                      min={1}
-                      max={4}
-                      step={0.1}
-                      value={[heightZoomLevel]}
-                      onValueChange={(value) => setHeightZoomLevel(value[0])}
-                      className="max-w-xs"
-                    />
-                    <ZoomIn className="text-muted-foreground" />
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2 text-muted-foreground"><StretchVertical /> Vertical Zoom</Label>
+                    <div className="flex items-center gap-4">
+                      <ZoomOut className="text-muted-foreground" />
+                      <Slider
+                        min={1}
+                        max={8}
+                        step={0.1}
+                        value={[heightZoomLevel]}
+                        onValueChange={(value) => setHeightZoomLevel(value[0])}
+                        className="max-w-xs"
+                      />
+                      <ZoomIn className="text-muted-foreground" />
+                    </div>
                   </div>
-                </div>
-            </div>
-            <Timeline 
-              eventRows={eventRows} 
-              viewStart={viewStart} 
-              viewEnd={viewEnd} 
-              zoomLevel={zoomLevel} 
-              heightZoomLevel={heightZoomLevel}
-              selectedEvents={selectedEvents}
-              onEventSelect={handleEventSelect}
-            />
-          </CardContent>
-        </Card>
-      ) : (
-        <FileUploader onFileSelect={handleFileSelect} />
-      )}
-    </main>
+              </div>
+              <Timeline 
+                eventRows={eventRows} 
+                viewStart={viewStart} 
+                viewEnd={viewEnd} 
+                zoomLevel={zoomLevel} 
+                heightZoomLevel={heightZoomLevel}
+                selectedEvents={selectedEvents}
+                onEventSelect={handleEventSelect}
+              />
+            </CardContent>
+          </Card>
+        ) : (
+          <FileUploader onFileSelect={handleFileSelect} />
+        )}
+      </main>
+      <footer className="py-8 text-center text-muted-foreground">
+        <a 
+          href="https://github.com/DrunkenCloud/schedule_flow" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 hover:text-foreground transition-colors"
+        >
+          Made with Firebase Studio by DrunkenCloud <Github className="w-5 h-5" />
+        </a>
+      </footer>
+    </>
   );
 }
