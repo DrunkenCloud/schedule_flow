@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { parseIcsFile, processEventsForLayout, getDayFromEvents } from '@/lib/events';
+import { processEventsForLayout, getDayFromEvents } from '@/lib/events';
 import { type CalendarEvent, type EventRow } from '@/lib/types';
 import { FileUploader } from '@/components/schedule-flow/file-uploader';
 import { Timeline } from '@/components/schedule-flow/timeline';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { startOfDay, endOfDay, setHours, format } from 'date-fns';
 import { CalendarDays, GanttChartSquare } from 'lucide-react';
+import { parseIcsString } from './actions';
 
 type ViewPeriod = 'all' | 'morning' | 'afternoon' | 'evening';
 
@@ -29,12 +30,20 @@ export default function Home() {
 
   const handleFileSelect = (file: File) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const content = e.target?.result as string;
         if (!content) throw new Error("File is empty.");
         
-        const parsedEvents = parseIcsFile(content);
+        const parsedEventsResult = await parseIcsString(content);
+
+        // Dates are strings after serialization, so we need to convert them back to Date objects
+        const parsedEvents: CalendarEvent[] = parsedEventsResult.map(event => ({
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        }));
+        
         if (parsedEvents.length === 0) {
           toast({
             title: "No Events Found",

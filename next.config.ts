@@ -30,21 +30,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  webpack: (config, { isServer }) => {
-    //
-    // The 'ical' package attempts to use the 'fs' module, which is not
-    // available in the browser. This configuration ensures that when Next.js
-    // builds for the client-side, it doesn't try to bundle the 'fs' module.
-    //
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    
-    return config;
-  },
 };
 
 export default nextConfig;
