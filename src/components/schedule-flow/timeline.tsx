@@ -12,6 +12,7 @@ interface TimelineProps {
   viewStart: Date;
   viewEnd: Date;
   zoomLevel: number;
+  heightZoomLevel: number;
   selectedEvents: Set<string>;
   onEventSelect: (eventId: string) => void;
   className?: string;
@@ -19,45 +20,39 @@ interface TimelineProps {
 
 const BASE_EVENT_HEIGHT = 28; // h-7
 const PADDING_Y = 8; // py-2
-const MIN_ROW_HEIGHT = BASE_EVENT_HEIGHT + PADDING_Y * 2;
 const ROW_GAP = 8;
 const BASE_HOUR_WIDTH = 100;
 
-export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, selectedEvents, onEventSelect, className }: TimelineProps) {
+export function Timeline({ eventRows, viewStart, viewEnd, zoomLevel, heightZoomLevel, selectedEvents, onEventSelect, className }: TimelineProps) {
   const [rowDimensions, setRowDimensions] = React.useState<{ height: number; top: number }[]>([]);
   
   const timelineRef = React.useRef<HTMLDivElement>(null);
 
   React.useLayoutEffect(() => {
     const newRowDimensions: { height: number; top: number }[] = [];
-    let cumulativeTop = ROW_GAP;
+    const baseRowHeight = (BASE_EVENT_HEIGHT + PADDING_Y) * heightZoomLevel;
+    const rowGap = ROW_GAP * heightZoomLevel;
+    let cumulativeTop = rowGap;
 
     for (let i = 0; i < eventRows.length; i++) {
       const row = eventRows[i];
       if (!row || row.length === 0) continue;
       
-      const maxLinesInRow = Math.max(...row.map(e => {
-        // A simple heuristic for lines. Assume a line break every 25 chars at normal zoom.
-        // This is not perfect but avoids complex DOM measurements.
-        const charsPerLine = 30 / zoomLevel;
-        return Math.min(3, Math.ceil((e.summary?.length || 1) / charsPerLine));
-      }));
-
-      const rowHeight = Math.max(MIN_ROW_HEIGHT, maxLinesInRow * BASE_EVENT_HEIGHT + PADDING_Y);
+      const rowHeight = baseRowHeight;
 
       newRowDimensions.push({
         height: rowHeight,
         top: cumulativeTop,
       });
-      cumulativeTop += rowHeight + ROW_GAP;
+      cumulativeTop += rowHeight + rowGap;
     }
     
     setRowDimensions(newRowDimensions);
-  }, [eventRows, zoomLevel]);
+  }, [eventRows, zoomLevel, heightZoomLevel]);
   
 
   const timelineHeight = rowDimensions.length > 0 
-    ? rowDimensions[rowDimensions.length - 1].top + rowDimensions[rowDimensions.length - 1].height + ROW_GAP
+    ? rowDimensions[rowDimensions.length - 1].top + rowDimensions[rowDimensions.length - 1].height + (ROW_GAP * heightZoomLevel)
     : 0;
 
   const hoursInView = Math.ceil(differenceInHours(viewEnd, viewStart));

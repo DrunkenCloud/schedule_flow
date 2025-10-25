@@ -8,15 +8,17 @@ import { Timeline } from '@/components/schedule-flow/timeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut } from 'lucide-react';
+import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut, StretchVertical, StretchHorizontal } from 'lucide-react';
 import { parseIcsString } from './actions';
 import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
 
 export default function Home() {
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);
   const [eventRows, setEventRows] = useState<EventRow[]>([]);
   const [eventDate, setEventDate] = useState<Date>(new Date());
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [heightZoomLevel, setHeightZoomLevel] = useState(1);
   const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
@@ -123,23 +125,44 @@ export default function Home() {
             </div>
           </CardHeader>
           <CardContent>
-             <div className="flex items-center gap-4 mb-4">
-              <ZoomOut className="text-muted-foreground" />
-              <Slider
-                min={1}
-                max={8}
-                step={0.1}
-                value={[zoomLevel]}
-                onValueChange={(value) => setZoomLevel(value[0])}
-                className="max-w-xs"
-              />
-              <ZoomIn className="text-muted-foreground" />
+             <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2 text-muted-foreground"><StretchHorizontal/> Horizontal Zoom</Label>
+                  <div className="flex items-center gap-4">
+                    <ZoomOut className="text-muted-foreground" />
+                    <Slider
+                      min={1}
+                      max={8}
+                      step={0.1}
+                      value={[zoomLevel]}
+                      onValueChange={(value) => setZoomLevel(value[0])}
+                      className="max-w-xs"
+                    />
+                    <ZoomIn className="text-muted-foreground" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2 text-muted-foreground"><StretchVertical /> Vertical Zoom</Label>
+                   <div className="flex items-center gap-4">
+                    <ZoomOut className="text-muted-foreground" />
+                    <Slider
+                      min={1}
+                      max={4}
+                      step={0.1}
+                      value={[heightZoomLevel]}
+                      onValueChange={(value) => setHeightZoomLevel(value[0])}
+                      className="max-w-xs"
+                    />
+                    <ZoomIn className="text-muted-foreground" />
+                  </div>
+                </div>
             </div>
             <Timeline 
               eventRows={eventRows} 
               viewStart={viewStart} 
               viewEnd={viewEnd} 
               zoomLevel={zoomLevel} 
+              heightZoomLevel={heightZoomLevel}
               selectedEvents={selectedEvents}
               onEventSelect={handleEventSelect}
             />
