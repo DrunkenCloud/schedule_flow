@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { processEventsForLayout, getDayFromEvents, getEventTimeRange } from '@/lib/events';
-import { type CalendarEvent, type EventRow } from '@/lib/types';
+import { type CalendarEvent, type EventRow, type StoredCalendarFile } from '@/lib/types';
 import { FileUploader } from '@/components/schedule-flow/file-uploader';
 import { Timeline } from '@/components/schedule-flow/timeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,6 +12,8 @@ import { CalendarDays, GanttChartSquare, ZoomIn, ZoomOut, StretchVertical, Stret
 import { parseIcsString } from './actions';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
+import { saveCalendarFile, getSavedCalendarFiles, removeCalendarFile } from '@/lib/local-storage-helpers';
+import { PreviousUploads } from '@/components/schedule-flow/previous-uploads';
 
 export default function Home() {
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);
@@ -20,49 +22,71 @@ export default function Home() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [heightZoomLevel, setHeightZoomLevel] = useState(1);
   const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
+  const [savedFiles, setSavedFiles] = useState<StoredCalendarFile[]>([]);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    // Load saved files from local storage on initial render
+    setSavedFiles(getSavedCalendarFiles());
+  }, []);
 
-  const handleFileSelect = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const content = e.target?.result as string;
-        if (!content) throw new Error("File is empty.");
-        
-        const parsedEventsResult = await parseIcsString(content);
-        
-        const parsedEvents: CalendarEvent[] = parsedEventsResult.map(event => ({
-          ...event,
-          start: new Date(event.start),
-          end: new Date(event.end),
-        }));
-        
-        if (parsedEvents.length === 0) {
-          toast({
-            title: "No Events Found",
-            description: "The selected .ics file does not contain any valid events.",
-            variant: "destructive"
-          });
-          return;
-        }
+  const handleParseEvents = useCallback(async (content: string, fileName?: string) => {
+    try {
+      if (!content) throw new Error("File is empty.");
+      
+      const parsedEventsResult = await parseIcsString(content);
+      
+      const parsedEvents: CalendarEvent[] = parsedEventsResult.map(event => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end),
+      }));
+      
+      if (parsedEvents.length === 0) {
+        toast({
+          title: "No Events Found",
+          description: "The selected .ics file does not contain any valid events.",
+          variant: "destructive"
+        });
+        return;
+      }
 
-        setAllEvents(parsedEvents);
-        setSelectedEvents(new Set());
-        const firstEventDate = getDayFromEvents(parsedEvents);
-        setEventDate(firstEventDate);
+      setAllEvents(parsedEvents);
+      setSelectedEvents(new Set());
+      const firstEventDate = getDayFromEvents(parsedEvents);
+      setEventDate(firstEventDate);
+      
+      if (fileName) {
+        saveCalendarFile(fileName, content);
+        setSavedFiles(getSavedCalendarFiles()); // Refresh file list
+        toast({
+          title: "Success!",
+          description: `Loaded ${parsedEvents.length} events from ${fileName}.`,
+        });
+      } else {
         toast({
           title: "Success!",
           description: `Loaded ${parsedEvents.length} events.`,
         });
-      } catch (error) {
-        console.error("Error parsing ICS file:", error);
-        toast({
-          title: "Parsing Error",
-          description: "Could not read or parse the selected .ics file. Please ensure it is valid.",
-          variant: "destructive"
-        });
-        setAllEvents([]);
       }
+
+    } catch (error) {
+      console.error("Error parsing ICS file:", error);
+      toast({
+        title: "Parsing Error",
+        description: "Could not read or parse the selected .ics file. Please ensure it is valid.",
+        variant: "destructive"
+      });
+      setAllEvents([]);
+    }
+  }, [toast]);
+
+
+  const handleFileSelect = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const content = e.target?.result as string;
+      await handleParseEvents(content, file.name);
     };
     reader.onerror = () => {
        toast({
@@ -86,11 +110,24 @@ export default function Home() {
     });
   };
 
+  const handleLoadFile = (file: StoredCalendarFile) => {
+    handleParseEvents(file.content, file.name);
+  };
+
+  const handleDeleteFile = (fileName: string) => {
+    removeCalendarFile(fileName);
+    setSavedFiles(getSavedCalendarFiles());
+    toast({
+      title: "File Removed",
+      description: `${fileName} has been removed from your saved list.`,
+    });
+  };
+
   const { viewStart, viewEnd } = useMemo(() => {
     return getEventTimeRange(allEvents, eventDate);
   }, [allEvents, eventDate]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (allEvents.length > 0) {
       const rows = processEventsForLayout(allEvents, viewStart, viewEnd);
       setEventRows(rows);
@@ -170,7 +207,16 @@ export default function Home() {
             </CardContent>
           </Card>
         ) : (
-          <FileUploader onFileSelect={handleFileSelect} />
+          <>
+            <FileUploader onFileSelect={handleFileSelect} />
+            {savedFiles.length > 0 && (
+               <PreviousUploads 
+                files={savedFiles}
+                onLoadFile={handleLoadFile}
+                onDeleteFile={handleDeleteFile}
+              />
+            )}
+          </>
         )}
       </main>
       <footer className="py-8 text-center text-muted-foreground">

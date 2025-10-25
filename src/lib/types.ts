@@ -8,3 +8,9 @@ export type CalendarEvent = {
 };
 
 export type EventRow = CalendarEvent[];
+
+export type StoredCalendarFile = {
+  name: string;
+  content: string; // The raw string content of the .ics file
+  addedAt: string; // ISO date string
+};
