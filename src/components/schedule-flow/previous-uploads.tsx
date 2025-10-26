@@ -30,17 +30,17 @@ export function PreviousUploads({ files, onLoadFile, onDeleteFile }: PreviousUpl
         {files && files.length > 0 ? (
           <ul className="space-y-3">
             {files.map((file) => (
-              <li key={file.name} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <FileClock className="h-5 w-5 text-muted-foreground" />
-                  <div>
-                    <p className="font-semibold text-foreground">{file.name}</p>
+              <li key={file.name} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg gap-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <FileClock className="h-5 w-5 text-muted-foreground shrink-0" />
+                  <div className="min-w-0">
+                    <p className="font-semibold text-foreground truncate" title={file.name}>{file.name}</p>
                     <p className="text-xs text-muted-foreground">
                       Last used: {formatDistanceToNow(new Date(file.addedAt), { addSuffix: true })}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <Button 
                     size="sm" 
                     variant="outline" 
