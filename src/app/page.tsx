@@ -190,7 +190,7 @@ export default function Home() {
                       <ZoomOut className="text-muted-foreground" />
                       <Slider
                         min={1}
-                        max={15}
+                        max={12}
                         step={0.1}
                         value={[zoomLevel]}
                         onValueChange={(value) => setZoomLevel(value[0])}
@@ -205,7 +205,7 @@ export default function Home() {
                       <ZoomOut className="text-muted-foreground" />
                       <Slider
                         min={1}
-                        max={15}
+                        max={8}
                         step={0.1}
                         value={[heightZoomLevel]}
                         onValueChange={(value) => setHeightZoomLevel(value[0])}
@@ -227,16 +227,16 @@ export default function Home() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="space-y-8">
-              <FileUploader onFileSelect={handleFileSelect} />
-              <ExampleSchedules onFileSelect={handleExampleFileLoad} />
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <ExampleSchedules onFileSelect={handleExampleFileLoad} />
+                <PreviousUploads 
+                  files={savedFiles}
+                  onLoadFile={handleLoadFile}
+                  onDeleteFile={handleDeleteFile}
+                />
             </div>
-            <PreviousUploads 
-              files={savedFiles}
-              onLoadFile={handleLoadFile}
-              onDeleteFile={handleDeleteFile}
-            />
+            <FileUploader onFileSelect={handleFileSelect} />
           </div>
         )}
       </main>
@@ -253,5 +253,3 @@ export default function Home() {
     </>
   );
 }
-
-    
