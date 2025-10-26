@@ -228,6 +228,7 @@ export default function Home() {
           </Card>
         ) : (
           <div className="space-y-8">
+            <FileUploader onFileSelect={handleFileSelect} />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                 <ExampleSchedules onFileSelect={handleExampleFileLoad} />
                 <PreviousUploads 
@@ -236,7 +237,6 @@ export default function Home() {
                   onDeleteFile={handleDeleteFile}
                 />
             </div>
-            <FileUploader onFileSelect={handleFileSelect} />
           </div>
         )}
       </main>
