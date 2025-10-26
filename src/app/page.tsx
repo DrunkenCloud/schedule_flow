@@ -227,18 +227,16 @@ export default function Home() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div className="space-y-8">
               <FileUploader onFileSelect={handleFileSelect} />
               <ExampleSchedules onFileSelect={handleExampleFileLoad} />
             </div>
-            {savedFiles.length > 0 && (
-               <PreviousUploads 
-                files={savedFiles}
-                onLoadFile={handleLoadFile}
-                onDeleteFile={handleDeleteFile}
-              />
-            )}
+            <PreviousUploads 
+              files={savedFiles}
+              onLoadFile={handleLoadFile}
+              onDeleteFile={handleDeleteFile}
+            />
           </div>
         )}
       </main>
@@ -255,3 +253,5 @@ export default function Home() {
     </>
   );
 }
+
+    
