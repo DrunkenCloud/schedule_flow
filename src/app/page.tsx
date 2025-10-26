@@ -14,6 +14,7 @@ import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { saveCalendarFile, getSavedCalendarFiles, removeCalendarFile } from '@/lib/local-storage-helpers';
 import { PreviousUploads } from '@/components/schedule-flow/previous-uploads';
+import { ExampleSchedules } from '@/components/schedule-flow/example-schedules';
 
 export default function Home() {
   const [allEvents, setAllEvents] = useState<CalendarEvent[]>([]);
@@ -96,6 +97,25 @@ export default function Home() {
         });
     }
     reader.readAsText(file);
+  };
+
+  const handleExampleFileLoad = async (filePath: string) => {
+    try {
+      const response = await fetch(filePath);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file: ${response.statusText}`);
+      }
+      const content = await response.text();
+      const fileName = filePath.split('/').pop();
+      await handleParseEvents(content, fileName);
+    } catch (error) {
+      console.error("Error loading example file:", error);
+      toast({
+        title: "Load Error",
+        description: "Could not load the selected example schedule.",
+        variant: "destructive"
+      });
+    }
   };
   
   const handleEventSelect = (eventId: string) => {
@@ -207,8 +227,11 @@ export default function Home() {
             </CardContent>
           </Card>
         ) : (
-          <>
-            <FileUploader onFileSelect={handleFileSelect} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-8">
+              <FileUploader onFileSelect={handleFileSelect} />
+              <ExampleSchedules onFileSelect={handleExampleFileLoad} />
+            </div>
             {savedFiles.length > 0 && (
                <PreviousUploads 
                 files={savedFiles}
@@ -216,7 +239,7 @@ export default function Home() {
                 onDeleteFile={handleDeleteFile}
               />
             )}
-          </>
+          </div>
         )}
       </main>
       <footer className="py-8 text-center text-muted-foreground">
