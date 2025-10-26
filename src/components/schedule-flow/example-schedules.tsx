@@ -9,8 +9,7 @@ interface ExampleSchedulesProps {
 }
 
 const exampleFiles = [
-  { name: "Sample Work Week", path: "/schedules/sample-work-week.ics" },
-  { name: "Sample Weekend", path: "/schedules/sample-weekend.ics" },
+  { name: "Devfest Chennai", path: "/schedules/Devfest_Chennai.ics" },
 ];
 
 export function ExampleSchedules({ onFileSelect }: ExampleSchedulesProps) {

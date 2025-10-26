@@ -1,0 +1,404 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Devfest Chennai 2025
+X-WR-TIMEZONE:Asia/Kolkata
+BEGIN:VEVENT
+DTSTART:20251108T050000Z
+DTEND:20251108T053500Z
+DTSTAMP:20251025T020430Z
+UID:track1-session1@devfest.gdgchennai.in
+CREATED:20251025T015429Z
+DESCRIPTION:Speaker: Kamal Shree\n\nLearn how to integrate AI capabilities 
+ into Flutter applications using Google's Gemma models
+LAST-MODIFIED:20251025T015429Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Gemma-licious AI: Cooking Up Smart Apps with Flutter
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T054000Z
+DTEND:20251108T061500Z
+DTSTAMP:20251025T020430Z
+UID:track1-session2@devfest.gdgchennai.in
+CREATED:20251025T015554Z
+DESCRIPTION:Speaker: Nikhilesh Tayal\n\nUnderstanding security challenges i
+ n AI agents and Model Context Protocol implementations
+LAST-MODIFIED:20251025T015554Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:AI Agent (and MCP) Vulnerabilities and Security
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T085000Z
+DTEND:20251108T092500Z
+DTSTAMP:20251025T020430Z
+UID:track1-session5@devfest.gdgchennai.in
+CREATED:20251025T015602Z
+DESCRIPTION:Speaker: Varun Raj Manoharan\n\nLearn how to build lightning-fa
+ st web applications using local-first architecture patterns
+LAST-MODIFIED:20251025T015602Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Build Super Fast web apps using Local First Approach
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T113000Z
+DTEND:20251108T114500Z
+DTSTAMP:20251025T020430Z
+UID:closing@devfest.gdgchennai.in
+CREATED:20251025T015610Z
+DESCRIPTION:Speaker: GDG Chennai Team\n\nThank you for joining us at DevFes
+ t Chennai 2025!
+LAST-MODIFIED:20251025T015611Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Closing Note
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T062000Z
+DTEND:20251108T065500Z
+DTSTAMP:20251025T020430Z
+UID:track1-session3@devfest.gdgchennai.in
+CREATED:20251025T015623Z
+DESCRIPTION:Speaker: Hemant Gupta\n\nAdvanced techniques for scaling Node.j
+ s applications with clustering and performance optimization
+LAST-MODIFIED:20251025T015624Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:From Queries to Clusters: Building High-Performance Node.js Backend
+ s
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T105500Z
+DTEND:20251108T113000Z
+DTSTAMP:20251025T020430Z
+UID:track1-panel2@devfest.gdgchennai.in
+CREATED:20251025T015640Z
+DESCRIPTION:TBD
+LAST-MODIFIED:20251025T015640Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Panel 2
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T101500Z
+DTEND:20251108T105000Z
+DTSTAMP:20251025T020430Z
+UID:track1-session6@devfest.gdgchennai.in
+CREATED:20251025T015647Z
+DESCRIPTION:Speaker: Jitendra Gupta\n\nFrom Code to Cloud in Minutes using 
+ Google's Gemini CLI tools
+LAST-MODIFIED:20251025T015647Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Supercharging Google Cloud Deployments with Gemini CLI: From Code t
+ o Cloud in Minutes
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T040000Z
+DTEND:20251108T044500Z
+DTSTAMP:20251025T020430Z
+UID:keynote@devfest.gdgchennai.in
+CREATED:20251025T015701Z
+DESCRIPTION:Welcome to DevFest Chennai 2025
+LAST-MODIFIED:20251025T015701Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:TBD
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T081000Z
+DTEND:20251108T084500Z
+DTSTAMP:20251025T020430Z
+UID:track1-session4@devfest.gdgchennai.in
+CREATED:20251025T015709Z
+DESCRIPTION:Speaker: Aditya Shinde\n\nExplore the intersection of Extended 
+ Reality and AI in Android development
+LAST-MODIFIED:20251025T015709Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:The Future is Spatial (XR): Building for Android XR with Gemini
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T093000Z
+DTEND:20251108T101000Z
+DTSTAMP:20251025T020430Z
+UID:track1-panel1@devfest.gdgchennai.in
+CREATED:20251025T015742Z
+DESCRIPTION:TBD
+LAST-MODIFIED:20251025T015742Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Panel 1
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T082000Z
+DTEND:20251108T092000Z
+DTSTAMP:20251025T020430Z
+UID:track2-session4@devfest.gdgchennai.in
+CREATED:20251025T020014Z
+DESCRIPTION:Speaker: Sairam Sundaresan\n\nQuick overview of the latest deve
+ lopments in vision-language model capabilities
+LAST-MODIFIED:20251025T020014Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:A Lightning tour of Vision Language Models
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T063000Z
+DTEND:20251108T065000Z
+DTSTAMP:20251025T020430Z
+UID:track2-session3@devfest.gdgchennai.in
+CREATED:20251025T020024Z
+DESCRIPTION:Speaker: Rivu Chakraborty\n\nAdvanced Kotlin Multiplatform deve
+ lopment with AI agent integration
+LAST-MODIFIED:20251025T020024Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Beyond Code Sharing: Building Smarter Mobile Apps with KMP and Agen
+ ts (Koog)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T105500Z
+DTEND:20251108T113000Z
+DTSTAMP:20251025T020430Z
+UID:track2-session8@devfest.gdgchennai.in
+CREATED:20251025T020036Z
+DESCRIPTION:Speaker: Bhavishya Pandit\n\nComplete agent development lifecyc
+ le using Google ADK
+LAST-MODIFIED:20251025T020036Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:End to end agent development life cycle using Google ADK
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T060500Z
+DTEND:20251108T062500Z
+DTSTAMP:20251025T020430Z
+UID:track2-session2@devfest.gdgchennai.in
+CREATED:20251025T020047Z
+DESCRIPTION:Speaker: Mayur Madnani\n\nBuilding mobile applications that lev
+ erage both cloud and on-device AI capabilities
+LAST-MODIFIED:20251025T020047Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:From Cloud to Pocket: Refining Stories with Google's Gemini API and
+  Gemma On-Device Model
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T050000Z
+DTEND:20251108T060000Z
+DTSTAMP:20251025T020430Z
+UID:track2-session1@devfest.gdgchennai.in
+CREATED:20251025T020056Z
+DESCRIPTION:Speaker: Aryan Irani\n\nIntroduction to Model Context Protocol 
+ for database operations in Google's AI Development Kit
+LAST-MODIFIED:20251025T020056Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Getting Started with MCP Toolbox for Databases in Google's ADK
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T093000Z
+DTEND:20251108T095000Z
+DTSTAMP:20251025T020430Z
+UID:track3-lightning3@devfest.gdgchennai.in
+CREATED:20251025T020107Z
+DESCRIPTION:Speaker: Navuluri Balaji\n\nCreate and Deploy Custom Agentic Fr
+ amework similar to Langchain and Langgraph and submit to PyPi
+LAST-MODIFIED:20251025T020107Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lightning Talk: Building NanoAgents: Create and Deploy Custom Agent
+ ic Framework similar to Langchain and Langgraph and submit to PyPi
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T063000Z
+DTEND:20251108T065000Z
+DTSTAMP:20251025T020430Z
+UID:track3-lightning2@devfest.gdgchennai.in
+CREATED:20251025T020115Z
+DESCRIPTION:Speaker: Vijayabharathi Karuppasamy\n\nUnderstanding the relati
+ onship between privacy checks and sandbox environments
+LAST-MODIFIED:20251025T020115Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lightning talk: Checks and Privacy Sandbox - An Interesting Duo
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T095500Z
+DTEND:20251108T101500Z
+DTSTAMP:20251025T020430Z
+UID:track3-lightning4@devfest.gdgchennai.in
+CREATED:20251025T020124Z
+DESCRIPTION:Speaker: Sahithya B A\n\nLearn how to build productivity-focuse
+ d browser extensions for better focus and time management
+LAST-MODIFIED:20251025T020124Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lightning Talk: Make Me Productive: Building a Chrome Extension to 
+ Stay Focused on YouTube
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T102000Z
+DTEND:20251108T104000Z
+DTSTAMP:20251025T020430Z
+UID:track3-lightning5@devfest.gdgchennai.in
+CREATED:20251025T020132Z
+DESCRIPTION:Speaker: Mahati Chandramohan\n\nExploring cognitive architectur
+ es and their implementation in large language model systems
+LAST-MODIFIED:20251025T020132Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lightning Talk: Orchestrating Synthetic Minds: Cognitive Architectu
+ res in the Age of LLMs
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T060500Z
+DTEND:20251108T062500Z
+DTSTAMP:20251025T020430Z
+UID:track3-lightning1@devfest.gdgchennai.in
+CREATED:20251025T020140Z
+DESCRIPTION:Speaker: Eganathan R\n\nReclaiming Purpose in the Age of AI - A
+  developer's journey to becoming a solution architect
+LAST-MODIFIED:20251025T020140Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lightning talk: Solutions Mindset: Exploring new technologies from 
+ Developer to Solutionist: Reclaiming Purpose in the Age of AI
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T093000Z
+DTEND:20251108T095000Z
+DTSTAMP:20251025T020430Z
+UID:track2-session6@devfest.gdgchennai.in
+CREATED:20251025T020148Z
+DESCRIPTION:Speaker: Vipin Kumar Agrahari\n\nUnderstanding how AI agents ma
+ intain and utilize memory for better decision making
+LAST-MODIFIED:20251025T020148Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Memory in Agentic AI
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T104500Z
+DTEND:20251108T110500Z
+DTSTAMP:20251025T020430Z
+UID:track3-panel@devfest.gdgchennai.in
+CREATED:20251025T020156Z
+DESCRIPTION:Speaker: Panel Moderator\n\nCommunity discussion and networking
+  session
+LAST-MODIFIED:20251025T020156Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Panel: Know your community
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T085000Z
+DTEND:20251108T092500Z
+DTSTAMP:20251025T020430Z
+UID:track2-session5@devfest.gdgchennai.in
+CREATED:20251025T020205Z
+DESCRIPTION:Speaker: Abhishek Doshi\n\nDeep dive into Flutter's BuildContex
+ t and its role in widget lifecycle management
+LAST-MODIFIED:20251025T020205Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Power of BuildContext in Flutter
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T095500Z
+DTEND:20251108T101500Z
+DTSTAMP:20251025T020430Z
+UID:track2-session7@devfest.gdgchennai.in
+CREATED:20251025T020212Z
+DESCRIPTION:Speaker: Sanju Sivalingam\n\nDesign principles and best practic
+ es for creating intuitive AI-powered user experiences
+LAST-MODIFIED:20251025T020213Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Rethinking AI UX
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T050000Z
+DTEND:20251108T060000Z
+DTSTAMP:20251025T020430Z
+UID:track3-workshop1@devfest.gdgchennai.in
+CREATED:20251025T020337Z
+DESCRIPTION:Speaker: Bhaarat Krishnan\n\nHands-on workshop on deploying Mod
+ el Context Protocol servers securely on Google Cloud Run
+LAST-MODIFIED:20251025T020338Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Workshop 1: Deploy a secure MCP server on Cloud Run
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20251108T082000Z
+DTEND:20251108T092000Z
+DTSTAMP:20251025T020430Z
+UID:track3-workshop2@devfest.gdgchennai.in
+CREATED:20251025T020349Z
+DESCRIPTION:Speaker: Aditya Mahakali\n\nWorkshop on implementing security b
+ est practices using Google's AI Development Kit and Application-to-Applicat
+ ion authentication
+LAST-MODIFIED:20251025T020349Z
+LOCATION:Chennai\, India
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Workshop 2: Securing your codebase using ADK and A2A
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
