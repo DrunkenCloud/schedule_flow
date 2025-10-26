@@ -48,7 +48,7 @@ export function FileUploader({ onFileSelect, className }: FileUploaderProps) {
       <CardContent>
         <Label
           htmlFor="ics-upload"
-          className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-card hover:bg-muted transition-colors"
+          className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer bg-card hover:bg-muted transition-colors"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={handleLabelClick}
