@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarPlay } from "lucide-react";
+import { PlayCircle } from "lucide-react";
 
 interface ExampleSchedulesProps {
   onFileSelect: (filePath: string) => void;
@@ -18,7 +18,7 @@ export function ExampleSchedules({ onFileSelect }: ExampleSchedulesProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <CalendarPlay className="w-6 h-6" />
+          <PlayCircle className="w-6 h-6" />
           Try an Example
         </CardTitle>
         <CardDescription>
